@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PlacePicker</string>
+    <string name="no_address">Adresse non valide</string>
+    <string name="title_activity_place_picker">Sélection d\'adresse</string>
+    <string name="dropped_pin">Repère placé</string>
+</resources>

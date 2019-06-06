@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.thevenot.placepicker">
+
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <application
+      android:supportsRtl="true">
+
+    <activity
+        android:name="com.thevenot.placepicker.PlacePickerActivity"
+        android:label="@string/title_activity_place_picker"
+        android:theme="@style/PlacePickerTheme"/>
+  </application>
+
+</manifest>

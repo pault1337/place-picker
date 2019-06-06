@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+ext {
+  bintrayRepo = "android"
+  bintrayName = "com.thevenot.placepicker"
+  libraryName = 'placepicker'
+
+  publishedGroupId = 'com.thevenot'
+  artifact = 'placepicker'
+  libraryVersion = '1.0.0'
+
+  libraryDescription = 'Free PlacePicker for Android using Google Maps'
+  siteUrl = 'https://github.com/pault1337/place-picker'
+  gitUrl = 'https://github.com/pault1337/place-picker.git'
+  developerId = 'theve1503'
+  developerName = 'Paul Thevenot'
+  developerEmail = 'paul.thevenot@gmail.com'
+  licenseName = 'The 2-Clause BSD License'
+  licenseUrl = 'https://opensource.org/licenses/BSD-2-Clause'
+  allLicenses = ["BSD 2-Clause"]
+}
+
+android {
+  compileSdkVersion 29
+
+  defaultConfig {
+    minSdkVersion 14
+    targetSdkVersion 29
+    versionCode 1
+    versionName "1.0.0"
+
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+  }
+
+  defaultConfig {
+    vectorDrawables.useSupportLibrary = true
+  }
+}
+
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation 'androidx.appcompat:appcompat:1.1.0'
+  implementation 'com.google.android.gms:play-services-maps:17.0.0'
+  implementation 'com.google.android.material:material:1.2.0-alpha05'
+  implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
+  implementation "com.google.android.gms:play-services-location:17.0.0"
+}
+
+if (project.rootProject.file('local.properties').exists()) {
+  apply from: '../install.gradle'
+  apply from: '../bintray.gradle'
+}
