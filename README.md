@@ -83,6 +83,9 @@ You can easily override some styles of the PlacePicker. Starting with :
 
 ## Changelog
 
+### [1.0.1]
+- Add option to set the my location button position 
+
 ### [1.0.0]
 - First version
 
