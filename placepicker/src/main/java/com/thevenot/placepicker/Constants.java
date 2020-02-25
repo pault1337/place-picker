@@ -12,6 +12,7 @@ public class Constants {
     static final String FAB_COLOR_RES_INTENT = "FAB_COLOR_RES_INTENT";
     static final String PRIMARY_TEXT_COLOR_RES_INTENT = "PRIMARY_TEXT_COLOR_RES_INTENT";
     static final String SECONDARY_TEXT_COLOR_RES_INTENT = "SECONDARY_TEXT_COLOR_RES_INTENT";
+    static final String MY_LOCATION_BUTTON_POSITION = "MY_LOCATION_BUTTON_POSITION";
     static final String MAP_RAW_STYLE_RES_INTENT = "MAP_RAW_STYLE_RES_INTENT";
     static final String MAP_TYPE_INTENT = "MAP_TYPE_INTENT";
     static final Double DEFAULT_LATITUDE = 40.748672;

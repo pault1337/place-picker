@@ -34,6 +34,7 @@ val intent = PlacePicker.IntentBuilder()
                 .showLatLong(true)  // whether the lat lon are displayed on the place picker or not
                 .setMapZoom(12.0f)  // Map Zoom Level. Default: 14.0
                 .setResponseData(Arrays.asList(PlacePicker.Data.ADDRESS, PlacePicker.Data.COORDINATES)) // The required response data
+                .setMyLocationButtonPosition(PlacePicker.Position.LEFT) // to set the my location button to the left (default is Position.RIGHT)
                 .hideMarkerShadow(true) // Hides the shadow under the map marker. Default: False
                 .setMarkerDrawable(R.drawable.marker) // Overrides the default Marker Image
                 .setMarkerImageImageColor(R.color.colorPrimary)

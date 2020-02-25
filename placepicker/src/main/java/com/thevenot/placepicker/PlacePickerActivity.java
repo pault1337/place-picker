@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -43,6 +45,7 @@ import static com.thevenot.placepicker.Constants.ADDRESS_INTENT;
 public class PlacePickerActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     public static final int DEFAULT_INTENT_INT_VALUE = -1;
+    public static final int DEFAULT_MARGIN_DP = 16;
     private final String TAG = "PlacePickerActivity";
 
     private GoogleMap map;
@@ -69,6 +72,7 @@ public class PlacePickerActivity extends AppCompatActivity implements OnMapReady
     private int mapRawResourceStyleRes = DEFAULT_INTENT_INT_VALUE;
     private List<Address> addresses;
     private MapType mapType;
+    private PlacePicker.Position myLocationButton;
 
     private Location mLastKnownLocation;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -120,8 +124,28 @@ public class PlacePickerActivity extends AppCompatActivity implements OnMapReady
 
         setIntentCustomization();
 
+        iniMyLocationButton();
+
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+        }
+    }
+
+    private void iniMyLocationButton() {
+        if (myLocationButton != null && myLocationButton.equals(PlacePicker.Position.LEFT)) {
+            ConstraintLayout constraintLayout = findViewById(R.id.place_picker_layout);
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+            constraintSet.clear(R.id.my_location_button, ConstraintSet.LEFT);
+            constraintSet.clear(R.id.my_location_button, ConstraintSet.BOTTOM);
+            constraintSet.clear(R.id.my_location_button, ConstraintSet.RIGHT);
+            constraintSet.clear(R.id.my_location_button, ConstraintSet.TOP);
+            constraintSet.clear(R.id.my_location_button, ConstraintSet.START);
+            constraintSet.clear(R.id.my_location_button, ConstraintSet.END);
+            int margin = (int) (DEFAULT_MARGIN_DP * this.getResources().getDisplayMetrics().density);
+            constraintSet.connect(R.id.my_location_button, ConstraintSet.START, R.id.place_picker_layout, ConstraintSet.START, margin);
+            constraintSet.connect(R.id.my_location_button, ConstraintSet.BOTTOM, R.id.info_layout, ConstraintSet.TOP, margin);
+            constraintSet.applyTo(constraintLayout);
         }
     }
 
@@ -163,6 +187,7 @@ public class PlacePickerActivity extends AppCompatActivity implements OnMapReady
         this.secondaryTextColorRes = this.getIntent().getIntExtra(Constants.SECONDARY_TEXT_COLOR_RES_INTENT, DEFAULT_INTENT_INT_VALUE);
         this.mapRawResourceStyleRes = this.getIntent().getIntExtra(Constants.MAP_RAW_STYLE_RES_INTENT, DEFAULT_INTENT_INT_VALUE);
         this.mapType = (MapType) this.getIntent().getSerializableExtra(Constants.MAP_TYPE_INTENT);
+        this.myLocationButton = this.getIntent().getParcelableExtra(Constants.MY_LOCATION_BUTTON_POSITION);
     }
 
     private void setIntentCustomization() {
@@ -346,13 +371,15 @@ public class PlacePickerActivity extends AppCompatActivity implements OnMapReady
     private void moveCameraCurrentLocationOrDefault() {
         // Set the map's camera position to the current location of the device.
         Log.d(TAG, "Last know pos " + mLastKnownLocation);
+        CameraPosition cameraPosition = null;
         if (mLastKnownLocation != null) {
-            CameraPosition cameraPosition = new CameraPosition(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()), zoom, 0, 0);
+            cameraPosition = new CameraPosition(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()), zoom, 0, 0);
             map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1000, null);
         } else {
             Log.d(TAG, "Current location is null. Using defaults, lat " + this.latitude + ", lon " + this.longitude);
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(this.latitude, this.longitude), zoom));
+            cameraPosition = new CameraPosition(new LatLng(this.latitude, this.longitude), zoom, 0, 0);
         }
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1000, null);
     }
 
     @Override

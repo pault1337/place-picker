@@ -29,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
                     .showLatLon(true)
                     .setMapRawResourceStyle(R.raw.map_style)
                     .setMapType(MapType.NORMAL)
+                    .setMyLocationButtonPosition(PlacePicker.Position.LEFT)
                     .setResponseData(Arrays.asList(PlacePicker.Data.ADDRESS, PlacePicker.Data.COORDINATES))
-                    .setMarkerDrawable(R.drawable.ic_custom_map_marker)
+//                    .setMarkerDrawable(R.drawable.ic_custom_map_marker)
                     .build(MainActivity.this);
 
             startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST);

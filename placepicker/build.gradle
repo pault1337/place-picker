@@ -9,7 +9,7 @@ ext {
 
   publishedGroupId = 'com.thevenot'
   artifact = 'placepicker'
-  libraryVersion = '1.0.0'
+  libraryVersion = '1.0.1'
 
   libraryDescription = 'Free PlacePicker for Android using Google Maps'
   siteUrl = 'https://github.com/pault1337/place-picker'

@@ -12,7 +12,6 @@ import androidx.annotation.RawRes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class PlacePicker {
@@ -23,6 +22,7 @@ public class PlacePicker {
         private double longitude;
         private float zoom;
         private List<Data> responseData;
+        private Position myLocationPosition;
         private boolean hideMarkerShadow;
         private int markerDrawableRes;
         private int markerImageColorRes;
@@ -75,6 +75,16 @@ public class PlacePicker {
          */
         public final PlacePicker.IntentBuilder setMapZoom(float zoom) {
             this.zoom = zoom;
+            return this;
+        }
+
+        /**
+         * Defines the {@link Position} of the my location position. Default is {@link Position#RIGHT}.
+         *
+         * @param position the desired position
+         */
+        public final PlacePicker.IntentBuilder setMyLocationButtonPosition(Position position) {
+            this.myLocationPosition = position;
             return this;
         }
 
@@ -157,6 +167,7 @@ public class PlacePicker {
             intent.putExtra(Constants.INITIAL_ZOOM_INTENT, zoom);
             intent.putExtra(Constants.HIDE_MARKER_SHADOW_INTENT, hideMarkerShadow);
             intent.putExtra(Constants.MARKER_DRAWABLE_RES_INTENT, markerDrawableRes);
+            intent.putExtra(Constants.MY_LOCATION_BUTTON_POSITION, (Parcelable) myLocationPosition);
             intent.putExtra(Constants.MARKER_COLOR_RES_INTENT, markerImageColorRes);
             intent.putExtra(Constants.FAB_COLOR_RES_INTENT, fabBackgroundColorRes);
             intent.putExtra(Constants.PRIMARY_TEXT_COLOR_RES_INTENT, primaryTextColorRes);
@@ -182,7 +193,7 @@ public class PlacePicker {
         }
 
         @NonNull
-        public static final Creator<Data> CREATOR = new Creator<Data>(){
+        public static final Creator<Data> CREATOR = new Creator<Data>() {
 
             @Override
             public Data createFromParcel(Parcel in) {
@@ -206,6 +217,47 @@ public class PlacePicker {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(ordinal());
             dest.writeString(dataId);
+        }
+    }
+
+    public enum Position implements Parcelable {
+        LEFT("left"), RIGHT("right");
+
+        private String positionId;
+
+        Position(String dataId) {
+            this.positionId = dataId;
+        }
+
+        public void setPositionId(String positionId) {
+            this.positionId = positionId;
+        }
+
+        @NonNull
+        public static final Creator<Position> CREATOR = new Creator<Position>() {
+
+            @Override
+            public Position createFromParcel(Parcel in) {
+                Position position = Position.values()[in.readInt()];
+                position.setPositionId(in.readString());
+                return position;
+            }
+
+            @Override
+            public Position[] newArray(int size) {
+                return new Position[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(ordinal());
+            dest.writeString(positionId);
         }
     }
 }
