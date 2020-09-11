@@ -12,7 +12,7 @@
 
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
-                android:value="YOUR_KEY_HERE"/>
+                android:value="AIzaSyBMYuMzJyhbfPOE-Zm1wv2TmryDfz5icLw"/>
 
         <activity android:name="com.thevenot.placepickerexample.MainActivity">
             <intent-filter>
